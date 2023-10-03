@@ -41,7 +41,7 @@ pipeline{
 
         }
         
-        stage("Sonarqube Analysis") {
+        stage("Sonarqube Code Analysis") {
             steps {
                 script {
                     withSonarQubeEnv(credentialsId: 'sonar_token') {
@@ -52,7 +52,7 @@ pipeline{
 
         }
 
-        stage("Quality Gate") {
+        stage("Check for Quality Gate") {
             steps {
                 script {
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar_token'
