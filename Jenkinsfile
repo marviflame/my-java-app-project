@@ -20,7 +20,7 @@ pipeline{
 
         }
     
-        stage("Checkout from GIT"){
+        stage("Checkout from SCM"){
             steps {
                 git branch: 'main', url: 'https://github.com/marviflame/complete-prodcution-e2e-pipeline'
             }
