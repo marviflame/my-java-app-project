@@ -2,8 +2,8 @@ pipeline{
     agent any
 	
     environment {
-        APP_NAME = "complete-prodcution-e2e-pipeline"
-        RELEASE = "2.0.0"
+        APP_NAME = "my-java-app-project"
+        RELEASE = "3.0.0"
         DOCKER_USER = "marviflame89"
         DOCKER_PASS = 'docker-token'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
@@ -22,7 +22,7 @@ pipeline{
     
         stage("Checkout from SCM"){
             steps {
-                git branch: 'main', url: 'https://github.com/marviflame/complete-prodcution-e2e-pipeline'
+                git branch: 'main', url: 'https://github.com/marviflame/my-java-app-project.git'
             }
 
         }
