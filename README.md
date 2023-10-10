@@ -1,4 +1,4 @@
-# Sample application for e2e DevOps Pipeline
-## This is a sample application to demonstrate an end to end DevOps Pipeline
+# Sample application for End to End DevOps Pipeline
+## A sample application to demonstrate an end to end DevOps Pipeline
 
 
