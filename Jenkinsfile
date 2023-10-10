@@ -52,7 +52,7 @@ pipeline{
 
         }
 
-        stage("Check for Quality Gate") {
+        stage("Check For Quality Gate") {
             steps {
                 script {
                     waitForQualityGate abortPipeline: false, credentialsId: 'token'
