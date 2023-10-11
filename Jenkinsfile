@@ -1,7 +1,5 @@
 pipeline{
-    agent {
-	label "Jenkins-Agent"
-    }
+    agent any
 	
     // environment {
     //     APP_NAME = "my-java-app-project"
