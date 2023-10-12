@@ -1,16 +1,16 @@
 pipeline{
     agent any
 	
-    // environment {
-    //     APP_NAME = "my-java-app-project"
-    //     RELEASE = "3.0.0"
-    //     DOCKER_USER = "marviflame89"
-    //     DOCKER_PASS = 'docker-token'
-    //     IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-    //     IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
-        // JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
+    environment {
+        APP_NAME = "my-java-app-project"
+        RELEASE = "3.0.0"
+        DOCKER_USER = "marviflame89"
+        DOCKER_PASS = 'docker-token'
+        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+        JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
 
-    // }
+    }
 	
     stages{
         stage("Cleanup Workspace"){
