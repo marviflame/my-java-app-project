@@ -1,18 +1,16 @@
 pipeline{
-    agent {
-	label "Jenkins-Agent"
-    }
+    agent any
 	
-    environment {
-        APP_NAME = "my-java-app-project"
-        RELEASE = "3.0.0"
-        DOCKER_USER = "marviflame89"
-        DOCKER_PASS = 'docker-token'
-        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+    // environment {
+    //     APP_NAME = "my-java-app-project"
+    //     RELEASE = "3.0.0"
+    //     DOCKER_USER = "marviflame89"
+    //     DOCKER_PASS = 'docker-token'
+    //     IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+    //     IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
         // JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
 
-    }
+    // }
 	
     stages{
         stage("Cleanup Workspace"){
@@ -41,42 +39,42 @@ pipeline{
                 sh "mvn test"
             }
 
-        }
+        // }
         
-        stage("Sonarqube Code Analysis") {
-            steps {
-                script {
-                    withSonarQubeEnv(credentialsId: 'sonar_token') {
-                        sh "mvn sonar:sonar"
-                    }
-                }
-            }
+        // stage("Sonarqube Code Analysis") {
+        //     steps {
+        //         script {
+        //             withSonarQubeEnv(credentialsId: 'sonar_token') {
+        //                 sh "mvn sonar:sonar"
+        //             }
+        //         }
+        //     }
 
-        }
+        // }
 
-        stage("Check For Quality Gate") {
-            steps {
-                script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar_token'
-                }
-            }
+        // stage("Check For Quality Gate") {
+        //     steps {
+        //         script {
+        //             waitForQualityGate abortPipeline: false, credentialsId: 'sonar_token'
+        //         }
+        //     }
 
-        }
+        // }
 
-        stage("Build & Push Image") {
-            steps {
-                script {
-                    docker.withRegistry('',DOCKER_PASS) {
-                        docker_image = docker.build "${IMAGE_NAME}"
-                    }
+        // stage("Build & Push Image") {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('',DOCKER_PASS) {
+        //                 docker_image = docker.build "${IMAGE_NAME}"
+        //             }
 
-                    docker.withRegistry('',DOCKER_PASS) {
-                        docker_image.push("${IMAGE_TAG}")
-                    }
-                }
-            }
+        //             docker.withRegistry('',DOCKER_PASS) {
+        //                 docker_image.push("${IMAGE_TAG}")
+        //             }
+        //         }
+        //     }
 
-        }
+        // }
 
         // stage("Trivy Scan") {
         //     steps {
