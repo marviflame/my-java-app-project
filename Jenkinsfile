@@ -41,25 +41,25 @@ pipeline{
 
         }
         
-        // stage("Sonarqube Code Analysis") {
-        //     steps {
-        //         script {
-        //             withSonarQubeEnv(credentialsId: 'sonar_token') {
-        //                 sh "mvn sonar:sonar"
-        //             }
-        //         }
-        //     }
+        stage("Sonarqube Code Analysis") {
+            steps {
+                script {
+                    withSonarQubeEnv(credentialsId: 'sonar_token') {
+                        sh "mvn sonar:sonar"
+                    }
+                }
+            }
 
-        // }
+        }
 
-        // stage("Check For Quality Gate") {
-        //     steps {
-        //         script {
-        //             waitForQualityGate abortPipeline: false, credentialsId: 'sonar_token'
-        //         }
-        //     }
+        stage("Check For Quality Gate") {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar_token'
+                }
+            }
 
-        // }
+        }
 
         // stage("Build & Push Image") {
         //     steps {
