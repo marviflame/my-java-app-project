@@ -39,7 +39,7 @@ pipeline{
                 sh "mvn test"
             }
 
-        // }
+        }
         
         // stage("Sonarqube Code Analysis") {
         //     steps {
