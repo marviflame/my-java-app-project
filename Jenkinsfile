@@ -61,20 +61,20 @@ pipeline{
 
         }
 
-        // stage("Build & Push Image") {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('',DOCKER_PASS) {
-        //                 docker_image = docker.build "${IMAGE_NAME}"
-        //             }
+        stage("Build & Push Image") {
+            steps {
+                script {
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
 
-        //             docker.withRegistry('',DOCKER_PASS) {
-        //                 docker_image.push("${IMAGE_TAG}")
-        //             }
-        //         }
-        //     }
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image.push("${IMAGE_TAG}")
+                    }
+                }
+            }
 
-        // }
+        }
 
         // stage("Trivy Scan") {
         //     steps {
