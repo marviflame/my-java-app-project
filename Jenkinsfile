@@ -76,23 +76,23 @@ pipeline{
 
         }
 
-        // stage("Trivy Scan") {
-        //     steps {
-        //         script {
-		//    sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image dmancloud/complete-prodcution-e2e-pipeline:1.0.0-22 --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
-        //         }
-        //     }
+        stage("Trivy Scan") {
+            steps {
+                script {
+		   sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image marviflame89/my-java-app-project:3.0.0-14 --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
+                }
+            }
 
-        // }
+        }
 
-        // stage ('Cleanup Artifacts') {
-        //     steps {
-        //         script {
-        //             sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-        //             sh "docker rmi ${IMAGE_NAME}:latest"
-        //         }
-        //     }
-        // }
+        stage ('Cleanup Artifacts') {
+            steps {
+                script {
+                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker rmi ${IMAGE_NAME}:latest"
+                }
+            }
+        }
 
 
     //     stage("Trigger CD Pipeline") {
