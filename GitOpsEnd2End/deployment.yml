@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: my-java-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       run: my-java-app
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-java-app
-        image: marviflame89/my-java-app-project:3.0.0-15
+        image: marviflame89/my-java-app-project:3.0.0-14
         ports:
           - containerPort: 80
         imagePullPolicy: IfNotPresent
