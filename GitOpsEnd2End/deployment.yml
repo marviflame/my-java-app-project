@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-java-app
-        image: marviflame89/my-java-app-project:3.0.0-14
+        image: marviflame89/my-java-app-project:3.0.0-20
         ports:
           - containerPort: 80
         imagePullPolicy: IfNotPresent
