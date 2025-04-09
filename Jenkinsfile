@@ -4,17 +4,17 @@ pipeline {
     }
 
     stages {
-        stage('Clean Workspace') {
+        stage('Git Checkout') {
             steps {
-                cleanWs()
+                git branch: 'main', credentialsId: 'git-cred', url: 'git@github.com:marviflame/my-java-app-project.git'
             }
         }
     }
 
     stages {
-        stage('Git Checkout') {
+        stage('Clean Workspace') {
             steps {
-                git branch: 'main', credentialsId: 'git-cred', url: 'git@github.com:marviflame/my-java-app-project.git'
+                cleanWs()
             }
         }
     }
