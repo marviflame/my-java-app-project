@@ -24,5 +24,17 @@ pipeline {
                 sh 'mvn clean compile'
             }
         }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Trivy Scan') {
+            steps {
+                sh 'trivy fs --format table -o fs-report.html .'
+            }
+        }
     }
 }
