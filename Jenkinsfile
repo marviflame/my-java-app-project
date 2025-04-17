@@ -40,9 +40,8 @@ pipeline {
         stage('Sonarqube Analysis') {
             steps {
                 script {
-                   def scannerHome = tool 'sonar-scan';
-                   withSonarQubeEnv() {
-                     sh "${scannerHome}/bin/sonar-scanner"
+                    withSonarQubeEnv(credentialsId: 'sonar-token') {
+                       sh 'mvn sonar:sonar'
                 }
                 
                 }
