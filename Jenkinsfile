@@ -11,8 +11,9 @@ pipeline {
         APP_VERSION = '1.0.0'
         DOCKER_USER = 'marviflame89'
         DOCKER_PASS = 'dockerhub'
-        DOCKER_IMAGE = "${DOCKER_USER}/${APP_NAME}:${APP_VERSION}"
         IMAGE_TAG = "${APP_VERSION}-${BUILD_NUMBER}"
+        DOCKER_IMAGE = "${DOCKER_USER}/${APP_NAME}:${IMAGE_TAG}"
+        
     }
 
     stages {
