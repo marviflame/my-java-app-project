@@ -5,6 +5,16 @@ pipeline {
     tools {
         maven 'Maven3'
     }
+
+    environment{
+        APP_NAME = 'java-app-project'
+        APP_VERSION = '1.0.0'
+        DOCKER_USER = 'marviflame89'
+        DOCKER_PASS = 'dockerhub'
+        DOCKER_IMAGE = "${DOCKER_USER}/${APP_NAME}:${APP_VERSION}"
+        IMAGE_TAG = "${APP_VERSION}-${BUILD_NUMBER}"
+    }
+
     stages {
 
         stage('Clean Workspace') {
@@ -59,6 +69,17 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'mvn clean package'
+            }
+        }
+
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'dockerhub') {
+                        sh "docker build -t ${DOCKER_IMAGE} ."
+                        sh "docker push ${DOCKER_IMAGE}"
+                    }
+                }
             }
         }
     }    
