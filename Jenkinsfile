@@ -36,5 +36,13 @@ pipeline {
                 sh 'trivy fs --format table -o fs-report.html .'
             }
         }
+
+        stage('Sonarqube Analysis') {
+            steps {
+                withSonarQubeEnv(credentialsId: 'sonar-token') {
+                    sh 'maven sonar:sonar'
+                }
+            }
+        }
     }
 }
