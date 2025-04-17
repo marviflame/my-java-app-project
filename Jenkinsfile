@@ -51,9 +51,16 @@ pipeline {
         stage('Sonarqube Quality Gate') {
             steps {
                 script {
+                    timeout(time: 1, unit: 'HOURS')
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
         }
-    }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+    }    
 }
