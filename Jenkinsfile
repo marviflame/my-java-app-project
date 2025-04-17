@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "Jenkins-Agent"
+        label "agent"
     }
     tools {
         maven 'Maven3'
@@ -15,7 +15,7 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/marviflame/my-java-app-project.git'
+                git branch: 'main', credentialsId: 'git-login', url: 'https://github.com/marviflame/my-java-app-project.git'
             }
         }
 
