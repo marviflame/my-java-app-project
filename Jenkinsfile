@@ -85,7 +85,7 @@ pipeline {
         stage('Trivy Scan for built image') {
             steps {
                 sh 'trivy image --exit-code 1 --severity CRITICAL,HIGH ${DOCKER_IMAGE}'
-                sh 'trivy image --format template --template '@html.tpl' -o trivy report.html ${DOCKER_IMAGE}'
+                sh 'trivy image --format template --template -o trivy report.html ${DOCKER_IMAGE}'
                 archiveArtifacts artifacts: 'trivy-report.html'
             }
         }
