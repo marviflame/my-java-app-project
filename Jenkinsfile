@@ -1,14 +1,12 @@
 pipeline {
-    agent {
-        label "agent"
-    }
+    agent any
     tools {
         maven 'Maven3'
     }
 
     environment{
         APP_NAME = 'java-app-project'
-        APP_VERSION = '1.0.0'
+        APP_VERSION = '2.0.0'
         DOCKER_USER = 'marviflame89'
         DOCKER_PASS = 'dockerhub'
         IMAGE_TAG = "${APP_VERSION}-${BUILD_NUMBER}"
@@ -81,6 +79,14 @@ pipeline {
                         sh "docker push ${DOCKER_IMAGE}"
                     }
                 }
+            }
+        }
+
+        stage('Trivy Scan for built image') {
+            steps {
+                sh 'trivy image --exit-code 1 --severity CRITICAL,HIGH ${DOCKER_IMAGE}'
+                sh 'trivy image --format template --template '@html.tpl' -o trivy report.html ${DOCKER_IMAGE}'
+                archiveArtifacts artifacts: 'trivy-report.html'
             }
         }
     }    
