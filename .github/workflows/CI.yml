@@ -71,9 +71,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          projectBaseDir: my-java-app-project
-          args: >
+      with:
+        projectBaseDir: my-java-app-project
+        args: >
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.host.url=${{ secrets.SONAR_URL }}
