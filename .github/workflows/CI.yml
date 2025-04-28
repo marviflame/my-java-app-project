@@ -57,24 +57,15 @@ jobs:
           gitleaks detect source . -r gitleaks-report.json -f json
 
   SonaQube_scan:
-
+  
+    name: SonarQube
     runs-on: ubuntu-latest
     needs: security_check
-    steps:    
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Analyze With SonarCloud
-      uses: sonarsource/sonarcloud-github-action@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        projectBaseDir: .
-        args: >
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=src/
-            -Dsonar.verbose=true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
