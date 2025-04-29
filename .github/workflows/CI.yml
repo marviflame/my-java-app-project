@@ -69,16 +69,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Setup SonarQube
-      uses: warchant/setup-sonar-scanner@v8
 
     - name: Analyze with SonarCloud
-      uses: sonarsource/sonarcloud-github-action@master
+      uses: sonarsource/sonarcloud-github-action@v2
       env:
           GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
-          projectBaseDir: my-java-app-project
+          projectBaseDir: .
           args: >
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
