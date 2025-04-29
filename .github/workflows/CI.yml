@@ -58,7 +58,7 @@ jobs:
 
   sonaqube_scan:
 
-    name: SonarQube
+    name: Sonarqube
     runs-on: self-hosted
     needs: security_check
     steps:
