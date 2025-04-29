@@ -67,10 +67,10 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be
       - name: SonarQube Scan    
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }} 
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ vars.SONAR_TOKEN }}
 
 
 
