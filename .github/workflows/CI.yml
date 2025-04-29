@@ -56,9 +56,8 @@ jobs:
           sudo apt-get install gitleaks -y
           gitleaks detect source . -r gitleaks-report.json -f json
 
-  sonaqube_scan:
-
   sonarqube:
+  
     name:
     runs-on: ubuntu-latest
     needs: security_check
