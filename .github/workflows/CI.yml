@@ -56,7 +56,7 @@ jobs:
           sudo apt-get install gitleaks -y
           gitleaks detect source . -r gitleaks-report.json -f json
 
-  SonaQube_scan:
+  sonaQube_scan:
 
     name: SonarQube
     runs-on: self-hosted
