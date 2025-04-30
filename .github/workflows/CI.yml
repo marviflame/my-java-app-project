@@ -56,21 +56,30 @@ jobs:
           sudo apt-get install gitleaks -y
           gitleaks detect source . -r gitleaks-report.json -f json
 
-  
+  sonaqube_scan:
 
-  sonarqube:
-    name: SonarQube  
     runs-on: ubuntu-latest
     needs: security_check
+    permissions:
+      contents: read
+      security-events: write
+      actions: read  
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be
-      - name: SonarQube Scan    
-        uses: SonarSource/sonarqube-scan-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }} 
-          SONAR_TOKEN: ${{ vars.SONAR_TOKEN }}
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@5.0.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+ 
+
+
+
+
+
+
 
 
 
