@@ -135,6 +135,6 @@ jobs:
 
     - name: Test running container
       run: |
-        docker run -d -p 8080:8080 --name demoapp marviflame89/demoapp:1.0.0
+        docker run -d -p 8080:8080 --name demoapp.jar marviflame89/demoapp:1.0.0
         sleep 10  # Wait for app startup
         curl -s http://localhost:8080/health | grep "OK"  # Simple health check
