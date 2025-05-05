@@ -134,29 +134,29 @@ jobs:
         push: true  # Set to false for local testing
 
   docker_trivy-scan:
-    needs: docker  # Depends on the Docker image being built
     runs-on: ubuntu-latest
+    needs: docker_build_and_push  # Depends on the Docker image being built
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: marviflame89/demoapp:1.0.0  # Same as the built image
-          format: 'sarif'  # Standard format for GitHub Code Scanning
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL,HIGH'  # Optional: Filter by severity
-          exit-code: '1'  # Fail the job if vulnerabilities are found
+    - name: Scan For Docker image with Trivy
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: marviflame89/demoapp:1.0.0  # Same as the built image
+        format: 'sarif'  # Standard format for GitHub Code Scanning
+        output: 'trivy-results.sarif'
+        severity: 'CRITICAL,HIGH'  # Optional: Filter by severity
+        exit-code: '1'  # Fail the job if vulnerabilities are found
 
-      - name: Upload Trivy results as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: trivy-scan-results
-          path: trivy-results.sarif
+    - name: Upload Trivy results as an artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: trivy-scan-results
+        path: trivy-results.sarif
 
-      - name: Upload to GitHub Code Scanning (optional)
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: trivy-results.sarif        
+    - name: Upload to GitHub Code Scanning (optional)
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: trivy-results.sarif        
    
