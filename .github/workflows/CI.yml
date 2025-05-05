@@ -130,6 +130,6 @@ jobs:
       with:
         context: .
         file: ./Dockerfile  # Path to your Dockerfile
-        tags: your-dockerhub-username/app:latest
+        tags: marviflame89/demoapp:1.0.0
         push: true  # Set to false for local testing
    
