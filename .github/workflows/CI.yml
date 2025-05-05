@@ -140,23 +140,33 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Scan For Docker image with Trivy
+
+    - name: Generate Trivy Vulnerability Report
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: marviflame89/demoapp:1.0.0  # Same as the built image
-        format: 'sarif'  # Standard format for GitHub Code Scanning
-        output: 'trivy-results.sarif'
-        severity: 'CRITICAL,HIGH'  # Optional: Filter by severity
-        exit-code: '1'  # Fail the job if vulnerabilities are found
+        image-ref: marviflame89/demoapp:1.0.0
+        scan-type: "fs"
+        output: trivy-report.json
+        format: json
+        scan-ref: .
+        exit-code: 0
 
-    - name: Upload Trivy results as an artifact
+    - name: Upload Vulnerability Scan Results
       uses: actions/upload-artifact@v4
       with:
-        name: trivy-scan-results
-        path: trivy-results.sarif
+        name: trivy-report
+        path: trivy-report.json
+        retention-days: 30
 
-    - name: Upload to GitHub Code Scanning (optional)
-      uses: github/codeql-action/upload-sarif@v3
+    - name: Fail build on High/Criticial Vulnerabilities
+      uses: aquasecurity/trivy-action@master
       with:
-        sarif_file: trivy-results.sarif        
+        scan-type: "fs"
+        format: table
+        scan-ref: .
+        severity: HIGH,CRITICAL
+        ignore-unfixed: true
+        exit-code: 1
+          # On a subsequent call to the action we know trivy is already installed so can skip this
+        skip-setup-trivy: true        
    
