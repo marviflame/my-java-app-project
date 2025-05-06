@@ -43,12 +43,12 @@ body {
 
 /* Update the YouTube icon color to red */
 .youtube {
-    color: red;
+    color: rgba(255, 72, 0, 0.912);
 }
 
 /* Update the GitHub icon color to black */
 .github {
-    color: black;
+    color: rgb(129, 72, 56);
 }
 
 .center {
