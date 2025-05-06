@@ -149,6 +149,6 @@ jobs:
           docker rm demoapp || true
           docker run -d \
             --name demoapp \
-            -p 8080:8080 \  # Map your app's port
+            -p 8080:8080 \
             --restart unless-stopped \
             marviflame89/demoapp:1.0.0
