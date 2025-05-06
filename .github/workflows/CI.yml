@@ -133,11 +133,11 @@ jobs:
         tags: marviflame89/demoapp:1.0.0
         push: true  # Set to false for local testing
 
-deploy_to_server:
-  runs-on: self-hosted
-  needs: docker_build_and_push  # Waits for the image to be built/pushed
-  steps:
-  - name: SSH into Server & Update Container
+  deploy_to_server:
+    runs-on: self-hosted
+    needs: docker_build_and_push  # Waits for the image to be built/pushed
+    steps:
+    - name: SSH into Server & Update Container
     uses: appleboy/ssh-action@v1
     with:
       host: ${{ secrets.SSH_HOST }}  # Your server IP
