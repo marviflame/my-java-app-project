@@ -138,12 +138,12 @@ jobs:
     needs: docker_build_and_push  # Waits for the image to be built/pushed
     steps:
     - name: SSH into Server & Update Container
-    uses: appleboy/ssh-action@v1
-    with:
-      host: ${{ secrets.SSH_HOST }}  # Your server IP
-      username: ${{ secrets.SSH_USERNAME }}
-      key: ${{ secrets.SSH_PRIVATE_KEY }}
-      script: |
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.SSH_HOST }}  # Your server IP
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
           docker pull marviflame89/demoapp:1.0.0
           docker stop demoapp || true
           docker rm demoapp || true
