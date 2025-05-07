@@ -70,10 +70,25 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
     - name: Install Snyk CLI
       run: npm install -g snyk
+      
     - name: Authenticate Snyk
-      run: snyk auth ${{ secrets.SNYK_TOKEN }}       
+      run: echo "${{ secrets.SNYK_TOKEN }}" | snyk auth --stdin
+
+    - name: Scan for vulnerabilities
+      run: |
+        snyk test --all-projects \
+          --severity-threshold=high \
+          --json-file-output=snyk_results.json \
+          --fail-on=upgradable
+
+    - name: Upload scan results
+      uses: actions/upload-artifact@v4
+      with:
+        name: snyk-results
+        path: snyk_results.json            
 
   sonaqube_scan:
 
