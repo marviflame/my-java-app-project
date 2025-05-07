@@ -75,7 +75,10 @@ jobs:
       run: npm install -g snyk
 
     - name: Authenticate Snyk
-      run: echo "${{ secrets.SNYK_TOKEN }}" | snyk auth --stdin            
+      run: echo "${{ secrets.SNYK_TOKEN }}" | snyk auth --stdin
+
+    - name: Monitor project in Snyk UI
+      run: snyk monitor --all-projects --org=marviflame             
 
   sonaqube_scan:
 
