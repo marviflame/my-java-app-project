@@ -58,6 +58,10 @@ jobs:
 
     runs-on: ubuntu-latest
     needs: security_check
+    permissions:
+      contents: read
+      security-events: write
+      actions: read 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -74,7 +78,7 @@ jobs:
   sonaqube_scan:
 
     runs-on: ubuntu-latest
-    needs: security_check
+    needs: snyk-scan
     permissions:
       contents: read
       security-events: write
