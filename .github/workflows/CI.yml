@@ -53,6 +53,16 @@ jobs:
           sudo apt-get install gitleaks -y
           gitleaks detect source . -r gitleaks-report.json -f json
 
+
+  Snyk_Vulnerability_Scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}        
+
   sonaqube_scan:
 
     runs-on: ubuntu-latest
@@ -133,22 +143,22 @@ jobs:
         tags: marviflame89/demoapp:1.0.0
         push: true  # Set to false for local testing
 
-  deploy_to_server:
-    runs-on: self-hosted
-    needs: docker_build_and_push  # Waits for the image to be built/pushed
-    steps:
-    - name: SSH into Server & Update Container
-      uses: appleboy/ssh-action@v1
-      with:
-        host: ${{ secrets.SSH_HOST }}  # Your server IP
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          docker pull marviflame89/demoapp:1.0.0
-          docker stop demoapp || true
-          docker rm demoapp || true
-          docker run -d \
-            --name demoapp \
-            -p 8080:8080 \
-            --restart unless-stopped \
-            marviflame89/demoapp:1.0.0
+  # deploy_to_server:
+  #   runs-on: self-hosted
+  #   needs: docker_build_and_push  # Waits for the image to be built/pushed
+  #   steps:
+  #   - name: SSH into Server & Update Container
+  #     uses: appleboy/ssh-action@v1
+  #     with:
+  #       host: ${{ secrets.SSH_HOST }}  # Your server IP
+  #       username: ${{ secrets.SSH_USERNAME }}
+  #       key: ${{ secrets.SSH_PRIVATE_KEY }}
+  #       script: |
+  #         docker pull marviflame89/demoapp:1.0.0
+  #         docker stop demoapp || true
+  #         docker rm demoapp || true
+  #         docker run -d \
+  #           --name demoapp \
+  #           -p 8080:8080 \
+  #           --restart unless-stopped \
+  #           marviflame89/demoapp:1.0.0
