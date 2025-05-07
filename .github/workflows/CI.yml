@@ -151,7 +151,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./Dockerfile  # Path to your Dockerfile
+        file: ./Dockerfile  # Path to Dockerfile
         tags: marviflame89/demoapp:1.0.0
         push: true  # Set to false for local testing
 
