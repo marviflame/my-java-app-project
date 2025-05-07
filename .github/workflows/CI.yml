@@ -78,7 +78,7 @@ jobs:
       run: echo "${{ secrets.SNYK_TOKEN }}" | snyk auth --stdin
 
     - name: Monitor project in Snyk UI
-      run: snyk monitor --all-projects --org=marviflame             
+      run: snyk monitor --all-projects --org=${{ secrets.SNYK_ORG }} --all-sub-projects          
 
   sonaqube_scan:
 
