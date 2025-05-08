@@ -164,7 +164,7 @@ jobs:
         image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/demoapp:1.0.0'
         format: 'sarif'
         output: 'trivy-results.sarif'
-        severity: 'CRITICAL,HIGH    
+        severity: 'CRITICAL,HIGH' 
 
     - name: Build and Push Docker Image
       uses: docker/build-push-action@v5
