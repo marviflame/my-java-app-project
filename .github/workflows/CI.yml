@@ -71,14 +71,28 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Build dependencies
+      run: mvn dependency:tree -B
+
     - name: Install Snyk CLI
-      run: npm install -g snyk
+      run: npm install -g snyk@latest
 
     - name: Authenticate With Snyk
       run: echo "${{ secrets.SNYK_TOKEN }}" | snyk auth --stdin
 
-    - name: Monitor project in Snyk UI
-      run: snyk monitor --all-projects --org=${{ secrets.SNYK_ORG }}        
+    - name: Debug monitoring
+      run: |
+        DEBUG="snyk*" snyk monitor \
+          --org=d5eaa972-e16b-4c59-b5d9-91e9dec7e05c \
+          --file=pom.xml \
+          --remote-repo-url=https://github.com/marviflame89/my-java-app-project \
+
+    - name: Upload debug logs
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: snyk-debug-logs
+        path: ${{ runner.temp }}/snyk-debug.log      
 
   sonaqube_scan:
 
