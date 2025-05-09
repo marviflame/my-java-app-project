@@ -159,10 +159,39 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and Push Docker Image
+    - name: Build Docker Image
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./Dockerfile  # Path to Dockerfile
+        file: ./Dockerfile
         tags: marviflame89/demoapp:1.0.0
-        push: true  # Set to false for local testing
+        push: false  # Build but don't push yet
+        load: true   # Make image available for Trivy scan
+
+    - name: Install Trivy
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+        echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+        sudo apt-get update
+        sudo apt-get install -y trivy
+
+    - name: Scan with Trivy
+      run: |
+        trivy image \
+          --severity CRITICAL,HIGH \
+          --exit-code 1 \
+          --ignore-unfixed \
+          --format table \
+          marviflame89/demoapp:1.0.0
+
+      # Only push if Trivy passes
+    - name: Push to Docker Hub
+      if: success()
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        tags: marviflame89/demoapp:1.0.0
+        push: true
