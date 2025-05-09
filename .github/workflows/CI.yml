@@ -180,7 +180,7 @@ jobs:
     - name: Scan with Trivy
       run: |
         trivy image \
-          --severity CRITICAL,HIGH \
+          --severity CRITICAL,MEDIUM \
           --exit-code 1 \
           --ignore-unfixed \
           --format table \
