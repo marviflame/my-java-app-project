@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: demo-app
+  template:
+    metadata:
+      labels:
+        run: demo-app
+    spec:
+      containers:
+      - name: my-java-app
+        image: marviflame89/demoapp:1.0.0
+        ports:
+          - containerPort: 8080 
+        imagePullPolicy: IfNotPresent
