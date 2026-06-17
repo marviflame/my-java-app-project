@@ -21,14 +21,9 @@ spec:
             app: utilities  
 
     - from:
-      - podSelector:
-          matchLabels:
-            app: utilities
-
-    - from:
       - namespaceSelector:
          matchLabels:
            kubernetes.io/metadata.name: ingress-nginx               
-      # ports:
-      # - protocol: TCP       
-      #   port: 8080
+      ports:
+      - protocol: TCP       
+        port: 8080
