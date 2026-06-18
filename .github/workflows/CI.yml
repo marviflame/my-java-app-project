@@ -21,29 +21,6 @@ jobs:
     - name: Build with Maven
       run: mvn compile
 
-    - name: Cache Trivy data
-      uses: actions/cache@v3
-      with:
-       path: |
-        ~/.cache/trivy
-        /tmp/trivy-cache
-      key: ${{ runner.os }}-trivy-${{ hashFiles('.trivyignore') }}
-      restore-keys: |
-        ${{ runner.os }}-trivy-
-
-    - name: Cache Maven dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-         ${{ runner.os }}-maven-
-
-    - name: Resolve Maven dependencies
-      run: mvn dependency:resolve    
-
-
-
   unit_test:
 
     runs-on: ubuntu-latest
@@ -63,7 +40,7 @@ jobs:
       security-events: write
       actions: read
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v4
     - name: Trivy Installation
       run: |
           sudo apt-get install wget apt-transport-https gnupg lsb-release
