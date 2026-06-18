@@ -53,8 +53,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Resolve Maven Dependencies
-      run: mvn dependency:resolve
 
     - name: Trivy Installation
       run: |
