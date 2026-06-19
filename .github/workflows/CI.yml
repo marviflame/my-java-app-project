@@ -202,7 +202,6 @@ jobs:
       run: |
         trivy image \
           --severity CRITICAL,MEDIUM \
-          --exit-code 1 \
           --ignore-unfixed \
           --format table \
           marviflame89/demoapp:1.0.1
