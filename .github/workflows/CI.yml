@@ -121,7 +121,7 @@ jobs:
  
     - name: SonarQube Quality Gate check
       id: sonarqube-quality-gate-check
-      uses: sonarsource/sonarqube-quality-gate-action@master
+      uses: sonarsource/sonarqube-quality-gate-action@v1.2.0
       with:
          scanMetadataReportFile: target/sonar/report-task.txt
       env:
@@ -131,7 +131,7 @@ jobs:
       
     - name: Show Quality Gate Status
       run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
-      
+
   build_maven:
 
     runs-on: ubuntu-latest
