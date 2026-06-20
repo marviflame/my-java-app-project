@@ -56,6 +56,28 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Cache NVD Data
+      uses: actions/cache@v4
+      with:
+        path: ~/.dependency-check-data
+        key: nvd-data-v1
+        restore-keys: nvd-data-v1
+
+    - name: OWASP Dependency-Check
+      uses: dependency-check/dependency-check-action@main
+      with:
+        project: 'my-java-app-project'
+        path: '.'
+        format: 'HTML'
+        output: 'dependency-check-report.html'
+        args: >
+          --scan .
+          --format HTML
+          --format JSON
+          --failOnCVSS 7
+          --enableRetired
+
+
     - name: Trivy Installation
       run: |
           sudo apt-get install wget apt-transport-https gnupg lsb-release
