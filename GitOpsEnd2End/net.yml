@@ -1,0 +1,11 @@
+  # Allow only specific Calico components
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: calico-system
+      podSelector:
+        matchLabels:
+          k8s-app: calico-kube-controllers
+    ports:
+    - protocol: TCP
+      port: 8080

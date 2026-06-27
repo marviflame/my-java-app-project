@@ -22,8 +22,17 @@ spec:
 
     - from:
       - namespaceSelector:
-         matchLabels:
-           kubernetes.io/metadata.name: ingress-nginx               
+          matchLabels:
+            kubernetes.io/metadata.name: calico-system
+        podSelector:
+          matchLabels:
+            k8s-app: calico-kube-controllers
+      # Rule 4: Allow tigera-system namespace on port 8080
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: tigera-operator
+        
       ports:
       - protocol: TCP       
         port: 8080

@@ -5,11 +5,12 @@ metadata:
   labels:
     run: demo-app
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
   - port: 80 # Service Port
     targetPort: 8080 # Node Port
     protocol: TCP
-    name: http
+    name: http  
   selector:
     run: demo-app
+
