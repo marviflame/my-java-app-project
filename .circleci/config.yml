@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   compile_maven:
     docker:
-      - image: cimg/base:java-17-alpine
+      - image: cimg/openjdk:17.0
     working_directory: ~/my-java-app-project
     steps:
       - checkout
