@@ -42,8 +42,56 @@ jobs:
             - ~/.m2
           key: maven-deps-{{ checksum "pom.xml" }}
 
+  security_check:
+    docker:
+      - image: cimg/openjdk:17.0
+    working_directory: ~/my-java-app-project
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - maven-cache-{{ checksum "pom.xml" }}
+            - maven-deps-
+
+      - run:
+          name: gitleaks Installation & Scan
+          command: |
+            sudo apt-get install gitleaks -y
+            gitleaks detect source . -r gitleaks-report.json -f json
+
+      - run:
+           name: Install trivy
+           command: |
+            sudo apt-get update
+            sudo apt-get install -y wget
+            wget https://github.com/aquasecurity/trivy/releases/download/v0.49.1/trivy_0.49.1_Linux-64bit.deb
+            sudo dpkg -i trivy_0.49.1_Linux-64bit.deb
+      
+      # Scan filesystem for vulnerabilities
+      - run:
+          name: Trivy filesystem scan
+          command: trivy fs --exit-code 1 --severity CRITICAL,HIGH .
+      
+      - run:
+          name: Build JAR for scanning
+          command: mvn package -DskipTests
+      
+      - run:
+          name: Trivy scan JAR
+          command: trivy fs --exit-code 1 --severity HIGH,CRITICAL target/*.jar
+      
+      - run:
+          name: Generate Trivy report
+          command: trivy fs --format json --output trivy-report.json .
+      
+      - store_artifacts:
+          path: trivy-report.json
+          destination: security-reports
+
+
 workflows:
-  build-workflow: 
+  default: 
     jobs:
       - compile_maven
       - unit_test_maven
+      - security_check        
