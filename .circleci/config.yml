@@ -21,7 +21,29 @@ jobs:
           paths:
             - ~/.m2
           key: maven-deps-{{ checksum "pom.xml" }}
+
+  unit_test_maven:
+    docker:
+      - image: cimg/openjdk:17.0
+    working_directory: ~/my-java-app-project
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - maven-cache-{{ checksum "pom.xml" }}
+            - maven-deps-
+
+      - run:
+          name: Run Unit Test
+          command: mvn clean test
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-deps-{{ checksum "pom.xml" }}
+
 workflows:
   build-workflow: 
     jobs:
       - compile_maven
+      - unit_test_maven
