@@ -14,14 +14,14 @@ jobs:
             - maven-deps-
 
       - run:
-          name: "Build With Maven"
-          command: "maven clean compile"
+          name: Build With Maven
+          command: maven clean compile
 
       - save_cache:
           paths:
             - ~/.m2
           key: maven-deps-{{ checksum "pom.xml" }}
 workflows:
-  say-hello-workflow: 
+  build-workflow: 
     jobs:
       - compile_maven
