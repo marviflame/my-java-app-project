@@ -15,7 +15,7 @@ jobs:
 
       - run:
           name: Build With Maven
-          command: maven clean compile
+          command: mvn clean compile
 
       - save_cache:
           paths:
